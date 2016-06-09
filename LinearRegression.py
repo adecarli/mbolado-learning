@@ -1,9 +1,10 @@
 import numpy as np
 
 class LinearRegression(object):
-    def __init__(self, features, alpha):
+    def __init__(self, features, alpha, eps = 1e-9):
         self.features = features
         self.alpha    = alpha
+        self.eps      = eps
 
         self.weights  = np.random.random( [features] ) / 100
         self.bias     = np.random.random( [1] ) / 100
@@ -12,17 +13,37 @@ class LinearRegression(object):
         # X [samples, features]
         # Y [samples]
 
+        if 'until_converge' in kwargs:
+            until_converge = kwargs['until_converge']
+        else:
+            until_converge = False
+
+        while True:
+            h = self.pre_fit(X, Y)
+
+            if self.J(h, Y) < self.eps: break
+            if not until_converge: break
+
+    def pre_fit(self, X, Y):
         samples = len(X)
+        hs = []
 
         for i in range(samples):
             x = X[i]
             y = Y[i]
 
             h = self.h_t(x)
+            hs.append(h)
+
             for j in range(self.features):
                 self.weights[j] = self.weights[j] + self.alpha * (y - h) * x[j]
 
             self.bias = self.bias + self.alpha * (y - h)
+
+        return np.array(hs)
+
+    def J(self, h, y):
+        return np.sum((h - y) ** 2)/2
 
     def predict(self, X):
         return np.array( [
@@ -57,15 +78,9 @@ def main():
         [4]
     ] )
 
-    for i in range(1000):
-        lr.fit(X, Y)
+    lr.fit(X, Y, until_converge=True)
 
     print(lr.predict(X_test))
-
-    print("")
-    print(lr.weights)
-    print(lr.bias)
-
 
 
 
