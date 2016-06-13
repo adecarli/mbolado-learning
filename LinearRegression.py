@@ -62,20 +62,22 @@ class LinearRegression(object):
         return self.bias + np.dot(self.weights, x)
 
 def main():
-    lr = LinearRegression(1, 0.05)
+    lr = LinearRegression(2, 0.05, 1e-9)
 
     X = np.array( [
-        [1],
-        [2]
+        [1, 2],
+        [2, 4],
+        [-1, 8]
     ] )
     Y = np.array( [
-        [1],
-        [2]
+        [3],
+        [6],
+        [7]
     ] )
 
     X_test = np.array( [
-        [3],
-        [4]
+        [3, 5],
+        [4, 1]
     ] )
 
     lr.fit(X, Y, until_converge=True)
