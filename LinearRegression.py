@@ -1,7 +1,35 @@
+#! /usr/bin/env python
+"""Linear Regression
+
+Implements a linear regression.
+"""
+
 import numpy as np
 
+__author__      =   "Marcel Santana, Vitor Castelo Branco"
+__copyright__   =   "djibowa."
+__credits__     =   ["Marcel Santana", "Vitor Castelo Branco"]
+
+__license__     =   "djibowa."
+__version__     =   "0.1"
+__maintainer__  =   "Marcel Santana, Vitor Castelo Branco"
+__email__       =   "vtcb@cin.ufpe.br"
+__status__      =   "Development"
+
 class LinearRegression(object):
+    """Linear Regression"""
+
     def __init__(self, features, alpha, eps = 1e-9):
+        """Returns a LinearRegression object
+
+    features: Number of features in the input
+    alpha:    Learning rate
+    eps:      Converging precision (optional)
+
+
+    weights: Network parameter
+    bias:    Network parameter"""
+
         self.features = features
         self.alpha    = alpha
         self.eps      = eps
@@ -10,8 +38,13 @@ class LinearRegression(object):
         self.bias     = np.random.random( [1] ) / 100
 
     def fit(self, X, Y, **kwargs):
-        # X [samples, features]
-        # Y [samples]
+        """Train the network
+
+    Trains the network using the Gradient Descente algorithm possibly several times
+
+    X:              input, numpy.array of shape [samples, features]
+    Y:              correct output, numpy.array of shape [samples]
+    until_converge: whether it should repeat the training algorithm until the precision is at least eps (optional)"""
 
         if 'until_converge' in kwargs:
             until_converge = kwargs['until_converge']
@@ -21,10 +54,16 @@ class LinearRegression(object):
         while True:
             h = self.pre_fit(X, Y)
 
-            if self.J(h, Y) < self.eps: break
             if not until_converge: break
+            if self.J(h, Y) < self.eps: break
 
     def pre_fit(self, X, Y):
+        """Train the network (once)
+
+    Trains the network using the Gradient Descente algorithm
+
+    X:              input, numpy.array of shape [samples, features]
+    Y:              correct output, numpy.array of shape [samples]"""
         samples = len(X)
         hs = []
 
@@ -43,22 +82,25 @@ class LinearRegression(object):
         return np.array(hs)
 
     def J(self, h, y):
+        """Error function"""
         return np.sum((h - y) ** 2)/2
 
     def predict(self, X):
+        """Predicts the output for given input
+
+    Predicts the output for the given input based no the already trained network (It should be, you know...)
+
+    X: input, numpy.array of shape [samples, features]
+    """
         return np.array( [
             self.h_t(X[i])
             for i in range(len(X))
         ] )
 
-        # print X[0]
-        # return np.fromfunction(
-        #     lambda i: self.h_t(X[i]),
-        #     [len(X)],
-        #     dtype=int
-        # )
-
     def h_t(self, x):
+        """Predicts the output for one sample
+
+    X: input, numpy.array of shape [features]"""
         return self.bias + np.dot(self.weights, x)
 
 def main():
