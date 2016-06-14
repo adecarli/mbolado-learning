@@ -7,10 +7,10 @@ Implements a linear regression.
 import numpy as np
 
 __author__      =   "Marcel Santana, Vitor Castelo Branco"
-__copyright__   =   "djibowa."
+__copyright__   =   ""
 __credits__     =   ["Marcel Santana", "Vitor Castelo Branco"]
 
-__license__     =   "djibowa."
+__license__     =   ""
 __version__     =   "0.1"
 __maintainer__  =   "Marcel Santana, Vitor Castelo Branco"
 __email__       =   "vtcb@cin.ufpe.br"
