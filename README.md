@@ -35,6 +35,18 @@ new_b = b + alpha*(2/N)*SUM(y[i] - h(x[i]))
 ```
 Se tomarmos um `alpha` grande demais, corremos o risco de ultrapassar o ponto de mínimo.
 
+### Conjunto de dados bidimensionais
+```
+X1 | X2 | Y
+ 1 |  2 | 3
+ 2 |  4 | 6
+-1 |  8 | 7
+```
+Nesse caso, queremos encontrar a tripla `(m1, m2, b)` tal que a função `h(x) = m1*x1 + m2*x2 + b` melhor se ajuste aos pontos `(x1, x2, y)`
+
+É possível mostrar que todo cálculo feito na seção anterior é valido para qualquer número N de *features*
+
+
 
 
 ### Sources:
