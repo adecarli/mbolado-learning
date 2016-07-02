@@ -107,7 +107,7 @@ class LinearRegression(object):
         return self.bias + np.dot(self.weights, x)
 
 def main():
-    lr = LinearRegression(1, 0.05, 1e-9)
+    lr = LinearRegression(2, 0.05, 1e-9)
 
     X = np.array( [
         [1, 2],
