@@ -45,6 +45,7 @@ class LinearRegression(object):
     X:              input, numpy.array of shape [samples, features]
     Y:              correct output, numpy.array of shape [samples]
     until_converge: whether it should repeat the training algorithm until the precision is at least eps (optional)"""
+        steps = 0
 
         if 'until_converge' in kwargs:
             until_converge = kwargs['until_converge']
@@ -56,6 +57,8 @@ class LinearRegression(object):
 
             if not until_converge: break
             if self.J(h, Y) < self.eps: break
+            steps = steps + 1
+            if steps > 10000: break
 
     def pre_fit(self, X, Y):
         """Train the network (once)
@@ -104,7 +107,7 @@ class LinearRegression(object):
         return self.bias + np.dot(self.weights, x)
 
 def main():
-    lr = LinearRegression(2, 0.05, 1e-9)
+    lr = LinearRegression(1, 0.05, 1e-9)
 
     X = np.array( [
         [1, 2],
